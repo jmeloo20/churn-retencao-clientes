@@ -130,4 +130,4 @@ Código MIT. Dados e tabelas derivadas sob CC BY 4.0, com atribuição em `fonte
 | GitHub Actions | Fluxo automático de testes e reprodução | Integração contínua de projeto de dados |
 | joblib | Serialização local para inferência | Separação entre treinamento e uso do modelo |
 
-O fluxo de GitHub Actions está configurado; sua execução remota depende da publicação do repositório.
+O fluxo de GitHub Actions está configurado para reproduzir a análise e executar testes a cada push ou pull request. Os testes locais passaram; o estado de cada execução remota pode ser consultado na aba Actions.
