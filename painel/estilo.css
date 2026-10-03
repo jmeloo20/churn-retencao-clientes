@@ -31,8 +31,6 @@ main { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20
 .abertura { grid-column: 1 / -1; display: grid; grid-template-columns: 2fr 1fr; align-items: center; gap: 32px; margin-bottom: 4px; }
 .sobretitulo { font-size: 10px !important; font-weight: 600; letter-spacing: 1.5px; color: var(--texto-suave); margin: 0 0 8px; }
 h1 { font-size: 30px; font-weight: 700; letter-spacing: -.8px; line-height: 1.2; margin: 0 0 8px; }
-h1 br { display: none; }
-h1 br::after { content: " "; }
 .introducao { font-size: 13px; line-height: 1.6; color: var(--texto-suave); max-width: 560px; margin: 0; }
 aside { position: relative; border-radius: 20px; background: #f3effb; padding: 16px 20px 16px 92px; color: var(--roxo-escuro); font-size: 11px; }
 .numero { position: absolute; left: 20px; top: 24px; font-size: 30px; font-weight: 700; letter-spacing: -1px; }
