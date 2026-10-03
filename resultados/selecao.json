@@ -1,0 +1,10 @@
+{
+  "modelo": "boosting",
+  "parametros": {
+    "l2_regularization": 1.0,
+    "max_leaf_nodes": 15
+  },
+  "criterio": "Maior average precision em CV agrupada no treino",
+  "capacidade_principal": 0.1,
+  "calibracao": "sigmoid em conjunto separado"
+}

@@ -1,0 +1,37 @@
+{
+  "clientes": 3150,
+  "churn_total": 495,
+  "prevalencia_total": 0.15714285714285714,
+  "perfis_distintos": 2785,
+  "linhas_por_particao": {
+    "treino": 1891,
+    "teste": 631,
+    "calibracao": 628
+  },
+  "prevalencia_por_particao": {
+    "calibracao": 0.15764331210191082,
+    "teste": 0.15689381933438987,
+    "treino": 0.1570597567424643
+  },
+  "modelo": "boosting",
+  "ap_teste": 0.836030416771571,
+  "brier_teste": 0.055194378822787486,
+  "carteira_10pct": {
+    "contatos": 64,
+    "cancelamentos_encontrados": 54,
+    "precisao": 0.84375,
+    "recall": 0.5454545454545454,
+    "lift": 5.377840909090909
+  },
+  "ic95_lift_cluster": [
+    4.219757891069914,
+    7.006791742431971
+  ],
+  "campos_excluidos": [
+    "Status",
+    "Customer Value",
+    "Age",
+    "Age Group"
+  ],
+  "semente": 42
+}

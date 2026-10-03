@@ -1,0 +1,53 @@
+const formato = new Intl.NumberFormat('pt-BR', {maximumFractionDigits: 1});
+const porcentagem = valor => `${formato.format(valor * 100)}%`;
+const registros = estudo.clientes;
+const totalChurn = registros.reduce((total, cliente) => total + cliente.observado, 0);
+const prevalencia = totalChurn / registros.length;
+const campo = id => document.getElementById(id);
+const calcular = capacidade => {
+  const contatos = Math.ceil(registros.length * capacidade / 100);
+  const fila = registros.slice(0, contatos);
+  const encontrados = fila.reduce((total, cliente) => total + cliente.observado, 0);
+  return {contatos, fila, encontrados, precisao: encontrados / contatos, recall: encontrados / totalChurn, lift: encontrados / contatos / prevalencia};
+};
+const ponto = (x, y) => `${50 + x / 30 * 475},${200 - y * 165}`;
+const desenharCurva = capacidade => {
+  const resultados = Array.from({length: 30}, (_, i) => ({capacidade: i + 1, ...calcular(i + 1)}));
+  const modelo = resultados.map(r => ponto(r.capacidade, r.recall)).join(' ');
+  const selecionado = calcular(capacidade);
+  const [x, y] = ponto(capacidade, selecionado.recall).split(',');
+  const grades = [0, .25, .5, .75, 1].map(v => `<line x1="50" y1="${200 - v * 165}" x2="525" y2="${200 - v * 165}" stroke="#edf0f5"/><text x="38" y="${204 - v * 165}" text-anchor="end">${porcentagem(v)}</text>`).join('');
+  const rotulos = [5, 10, 20, 30].map(v => `<text x="${50 + v / 30 * 475}" y="225" text-anchor="middle">${v}%</text>`).join('');
+  campo('curva').innerHTML = `<title>Recall por capacidade, com ${capacidade}% selecionado</title>${grades}<polyline points="${ponto(0, 0)} ${ponto(30, .3)}" fill="none" stroke="#a5b3c6" stroke-width="2" stroke-dasharray="5 5"/><polyline points="${modelo}" fill="none" stroke="#204bba" stroke-width="3"/><line x1="${x}" y1="${y}" x2="${x}" y2="200" stroke="#204bba" stroke-dasharray="3 4"/><circle cx="${x}" cy="${y}" r="5" fill="#204bba" stroke="white" stroke-width="2"/>${rotulos}`;
+};
+const atualizar = () => {
+  const capacidade = Number(campo('capacidade').value);
+  const r = calcular(capacidade);
+  campo('capacidade-valor').textContent = `${capacidade}%`;
+  campo('contatos').textContent = r.contatos;
+  campo('total').textContent = `de ${registros.length} clientes do teste`;
+  campo('precisao').textContent = porcentagem(r.precisao);
+  campo('capturados').textContent = `${r.encontrados} / ${totalChurn}`;
+  campo('recall').textContent = `${porcentagem(r.recall)} dos cancelamentos do teste`;
+  campo('lift').textContent = `${formato.format(r.lift)}×`;
+  campo('clientes').innerHTML = r.fila.slice(0, 12).map((c, i) => `<tr><td>${String(i + 1).padStart(2, '0')}</td><td>${c.id}</td><td><div class="risco"><span>${porcentagem(c.risco)}</span><span class="mini"><span style="width:${c.risco * 100}%"></span></span></div></td><td><span class="etiqueta">${c.observado ? 'Cancelou' : 'Permaneceu'}</span></td></tr>`).join('');
+  desenharCurva(capacidade);
+};
+const faixas = Array.from({length: 5}, (_, i) => ({inicio: i * .2, fim: (i + 1) * .2, n: registros.filter(c => c.risco >= i * .2 && (i === 4 ? c.risco <= 1 : c.risco < (i + 1) * .2)).length}));
+const maximo = Math.max(...faixas.map(f => f.n));
+campo('distribuicao').innerHTML = faixas.map(f => `<div class="barra" role="listitem"><span>${Math.round(f.inicio * 100)}–${Math.round(f.fim * 100)}%</span><div class="trilho"><span style="width:${f.n / maximo * 100}%"></span></div><span>${f.n}</span></div>`).join('');
+campo('amostra').textContent = registros.length;
+const intervalo = estudo.resumo.ic95_lift_cluster;
+campo('evidencia').textContent = `Na política principal, o lift foi ${formato.format(estudo.resumo.carteira_10pct.lift)}×, com IC exploratório de 95% entre ${formato.format(intervalo[0])} e ${formato.format(intervalo[1])} por bootstrap agrupado. Average precision: ${estudo.resumo.ap_teste.toFixed(3).replace('.', ',')}.`;
+campo('capacidade').addEventListener('input', atualizar);
+campo('exportar').addEventListener('click', () => {
+  const r = calcular(Number(campo('capacidade').value));
+  const csv = 'posicao,linha_fonte,probabilidade,churn_observado\n' + r.fila.map((c, i) => `${i + 1},${c.id},${c.risco},${c.observado}`).join('\n');
+  const url = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'}));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `fila-capacidade-${campo('capacidade').value}pct.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+});
+atualizar();

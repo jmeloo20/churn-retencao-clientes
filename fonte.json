@@ -1,0 +1,10 @@
+{
+  "url": "https://archive.ics.uci.edu/static/public/563/iranian+churn+dataset.zip",
+  "pagina": "https://archive.ics.uci.edu/dataset/563/iranian+churn+dataset",
+  "credito": "Iranian Churn (2020). DOI: 10.24432/C5JW3Z",
+  "licenca": "CC BY 4.0",
+  "acesso": "2026-10-02",
+  "sha256": {
+    "Customer Churn.csv": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1"
+  }
+}

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retenção | Laboratório de decisão</title>
+  <link rel="stylesheet" href="estilo.css">
+  <script defer src="dados.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header><span class="marca">JM <span>/ CIÊNCIA DE DADOS</span></span><span class="selo">AVALIAÇÃO HISTÓRICA · UCI</span></header>
+  <main>
+    <section class="abertura"><div><p class="sobretitulo">LABORATÓRIO DE DECISÃO / 01</p><h1>Quem contatar<br>primeiro?</h1><p class="introducao">Explore como a capacidade de atendimento muda a concentração de cancelamentos na fila de retenção.</p></div><aside><span class="ponto"></span> Teste reservado<span class="numero" id="amostra"></span><p>clientes fora do ajuste do modelo</p><a href="../README.md">Ver método e limites ↗</a></aside></section>
+    <section class="controle"><div><label for="capacidade">Capacidade de contato</label><p>Percentual da carteira que a equipe consegue atender.</p></div><div class="ajuste"><div><output id="capacidade-valor" for="capacidade">10%</output><span>da carteira</span></div><input id="capacidade" type="range" min="5" max="30" step="1" value="10"><div class="extremos"><span>5%</span><span>30%</span></div></div></section>
+    <section class="metricas" aria-label="Resultado da capacidade selecionada" aria-live="polite"><article><span>Contatos priorizados</span><strong id="contatos"></strong><small id="total"></small></article><article><span>Precisão da fila</span><strong id="precisao"></strong><small>cancelamentos observados / contatos</small></article><article><span>Cancelamentos identificados</span><strong id="capturados"></strong><small id="recall"></small></article><article class="destaque"><span>Lift da priorização</span><strong id="lift"></strong><small>comparado à seleção aleatória esperada</small></article></section>
+    <section class="graficos"><article class="cartao"><p class="sobretitulo">COBERTURA DO DESFECHO</p><h2>O alcance da fila</h2><p>Fração dos cancelamentos do teste identificada em cada capacidade.</p><svg id="curva" viewBox="0 0 560 245" role="img" aria-label="Recall por capacidade de contato"></svg><div class="legenda"><span class="linha azul"></span>Modelo<span class="linha cinza"></span>Seleção aleatória esperada</div></article><article class="cartao"><p class="sobretitulo">CONCENTRAÇÃO DE RISCO</p><h2>Probabilidades no teste</h2><p>Distribuição dos clientes por faixa de risco previsto.</p><div id="distribuicao" class="barras" role="list"></div><small>Probabilidades calibradas; não representam resposta a uma campanha.</small></article></section>
+    <section class="cartao fila"><div class="titulo-fila"><div><p class="sobretitulo">FILA DE CONTATO</p><h2>Os primeiros da lista</h2></div><button id="exportar" type="button">Baixar fila em CSV ↓</button></div><p>Até 12 registros mais bem posicionados. Identificação pela linha da base pública; empates seguem a ordem fixa do estudo.</p><div class="tabela"><table><thead><tr><th>Posição</th><th>Linha na fonte</th><th>Risco previsto</th><th>Desfecho histórico</th></tr></thead><tbody id="clientes"></tbody></table></div></section>
+    <section class="metodo"><div><p class="sobretitulo">EVIDÊNCIA E INCERTEZA</p><h2>Um ranking, com limites claros.</h2></div><div><p>O modelo usa gradient boosting, validação por perfis e calibração em uma amostra separada. A capacidade principal de 10% foi definida antes de avaliar o teste.</p><p id="evidencia"></p><p>O controle é uma exploração dos resultados históricos. Alterá-lo não treina novamente o modelo nem estabelece uma política ótima. Identificar risco não demonstra clientes retidos ou receita recuperada.</p></div></section>
+  </main>
+  <footer><span>Jonatha Melo · Projeto de portfólio</span><span>Iranian Churn / UCI · Dados CC BY 4.0 · Código MIT</span></footer>
+</body>
+</html>

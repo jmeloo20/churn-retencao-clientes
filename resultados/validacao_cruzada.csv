@@ -1,0 +1,3 @@
+modelo,ap_cv,desvio_folds,parametros
+boosting,0.8932583699836278,0.030270055719261477,"{""l2_regularization"": 1.0, ""max_leaf_nodes"": 15}"
+logistica,0.7473530017529684,0.03081516713336345,"{""logisticregression__C"": 10.0, ""logisticregression__class_weight"": null}"
