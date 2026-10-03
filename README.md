@@ -8,6 +8,8 @@ Projeto de ciência de dados que transforma previsão de cancelamento em uma fil
 
 ## Painel interativo
 
+[Abrir o painel publicado](https://jmeloo20.github.io/churn-retencao-clientes/painel/).
+
 Abra `painel/index.html` no navegador, sem instalar dependências. O painel mostra o ranking de teste, a distribuição de riscos e um controle de capacidade de contato entre 5% e 30%, com precisão, recall, lift e exportação da fila em CSV. Usa HTML, CSS, JavaScript e SVG, funciona offline e adapta a disposição ao tamanho da tela.
 
 Os indicadores vêm das previsões reais do teste reservado. Alterar a capacidade é exploração histórica, não otimização de política nem prova de impacto. A política principal permanece 10%. O desfecho observado é exibido apenas para avaliação retrospectiva; não estaria disponível no momento de uma campanha.
